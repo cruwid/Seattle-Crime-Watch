@@ -1,0 +1,190 @@
+
+body {
+    background-color: #333333;                   /*background color*/
+    text-align:justify;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    text-align:justify;
+    margin: 0;
+    padding: 0;
+    color:#000000}                          /*all text color*/
+
+
+    
+hr {background-color: #000000;
+ size: 10px}
+
+
+/* Header */
+#header {width:100%;
+    height: 100px;
+    padding-top: 35px;
+    background-color: #333333;
+    color: #ffffff}                              /*dont know*/
+#header h1 {float:left;
+    font-size:30px;
+    letter-spacing:-2px;
+    color: #000000;
+    padding-left: 80px;}                             /*Shakti Rajpurohit*/
+#header h2 {float:right;
+    font-size:15px;
+    color: #404040;
+    padding-top: 20px;
+    padding-right: 50px}                              /*dont know*/
+a {color:#000000;text-decoration:none}              /*dont know*/
+a:hover {color:#666666;                             /*dont know*/
+    text-decoration:none}
+
+/* Menu */
+#menu1 {
+    width:820px;
+    float: right;
+    border-top-right-radius: 10px;
+    text-transform:uppercase;
+    font-weight:bold;
+    font-size:13px;
+    background-color: #666666;
+    color:#ffffff }
+#menu1 ul {margin:0 auto;
+    width: auto;
+    overflow:hidden;
+    list-style:none;
+    padding:0}
+#menu1 ul li { float: left;
+    padding: 2px;
+    margin: 0;
+    display: inline-block;
+}
+#menu1 ul li a {display: block;
+    width:140px;
+    height: 25px;
+    padding:6px;
+    background:#666666;                 /*navigation bar*/
+    text-align:center;
+    text-decoration:none;
+    text-transform:uppercase;
+    font-weight:bold;
+    color:#ffffff }    /*font color*/
+#menu1 ul li .current {display:block;
+    width:140px;
+    padding:6px;
+    text-align:center;
+    text-decoration:none;
+    text-transform:uppercase;
+    font-weight:bold;color:#c8c8c8 }
+#menu1 ul a:hover {color: #c8c8c8;}
+
+.centerBox {
+  display:inline-block;
+  text-align:center;
+}
+
+
+
+/* Content */
+#over img {
+    display: block;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom: 15px;
+}
+#content {width:98%;
+    padding: 0px 0px 40px 0px;
+    box-shadow: 0 0 20px black;
+    margin: auto;
+    height: auto;
+    border-radius: 10px;
+    background-color: #ffffff}         /*content background*/
+#contentcenter {width:60%;
+    margin:auto;
+    height: 100%;
+    overflow:hidden;
+    text-align: center;
+    /*padding: 30px 30px 30px 30px; */
+    /*background:#222930 */}         /*content background*/    
+#col{padding-left: 100px}
+#colHeader{
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 20px black;
+    width:98%;
+    height:75px;
+    padding: 5px 0 0 0;
+    background-color: #c8c8c8;
+}
+#colMenu {width:100%;
+    height:45px;
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+    background-color: #666666;}
+#colOne {float:left;
+    width:20%;
+    margin-top:20px;
+    padding:0 20px 0 100px}
+#colLeft {float:left;
+    padding-left: 2%;
+    height: 100%;
+    border-right: 1px solid;
+    border-right-color: #000000;
+    width:15%;}
+#colRight {float:right;
+    padding-right: 2%;
+    padding-left: 1%;
+    width:77%;}
+#colFour {float: left;
+    width:28%;
+    padding:2% 4% 2% 0%}
+#colFive {float:left;
+    margin-top:25px;
+    width:300px;
+    padding:5px 5px 5px 5px}
+#colSix {float:right;
+    margin-top:5px;
+    width:490px;
+    padding:5px 5px 5px 5px}
+
+#content h1{ padding-left: 100px}
+
+#content h2 {margin-bottom:10px;
+margin-left: 10px;
+    font-size:24px;
+    letter-spacing:-1px;}
+#footer {width: 100%;
+    height: 50px;
+    position:   relative;
+    bottom: 0;
+    padding-top: 20px;
+    background-color: #333333;
+    color: #ffffff}
+#footer p {text-align:center;
+    padding:0;
+    font-size:10px;}
+    
+
+#wrapper .text {
+height: 200px;
+width: 200px;
+visibility:hidden;
+}
+
+#wrapper:hover .text {
+height: 200px;
+width: 200px;    
+visibility:visible;
+}
+
+.highlightit img{
+filter:progid:DXImageTransform.Microsoft.Alpha(opacity=75);
+-moz-opacity: 0.75;
+opacity: 0.75;
+}
+
+.highlightit:hover img{
+filter:progid:DXImageTransform.Microsoft.Alpha(opacity=100);
+-moz-opacity: 1;
+opacity: 1;
+}
+
+.fleft {float:left}
+.fright {float:right}
+.fcenter {float:none;text-align:center}

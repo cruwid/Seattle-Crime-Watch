@@ -1,0 +1,22 @@
+{
+ "name": "crimes",
+ "children": [
+    {
+     "name": "C1",
+     "children": [
+      {"name": "Robbery", "size": 3938},
+      {"name": "HierarchicalCluster", "size": 6714},
+      {"name": "MergeEdge", "size": 743}
+     ]
+    },
+    {
+     "name": "C2",
+     "children": [
+      {"name": "Alcohol", "size": 3534},
+      {"name": "LinkDistance", "size": 5731},
+      {"name": "MaxFlowMinCut", "size": 7840},
+      {"name": "SpanningTree", "size": 3416}
+     ]
+    }
+  ]
+}

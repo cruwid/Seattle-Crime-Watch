@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<link href="default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+<script type="text/javascript" src="fadeslideshow.js">
+
+/***********************************************
+* Ultimate Fade In Slideshow v2.0- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for this script and 100s more
+***********************************************/
+
+</script>
+
+<script type="text/javascript">
+<!-- var mygallery=new fadeSlideShow({
+	wrapperid: "fadeshow1", //ID of blank DIV on page to house Slideshow
+	dimensions: [550, 225], //width/height of gallery in pixels. Should reflect dimensions of largest image
+	imagearray: [
+		["images/img4.jpg", "", "", ""],
+		["images/steve.jpg", "", "", ""],
+		["images/img5.jpg", "", "", ""],
+		["images/sporano.jpg", "", "", ""],
+		//<--no trailing comma after very last image element!
+	],
+	displaymode: {type:'auto', pause:2500, cycles:0, wraparound:false},
+	persist: false, //remember last viewed slide and recall within same session?
+	fadeduration: 500, //transition duration (milliseconds)
+	descreveal: "ondemand",
+	togglerid: ""
+}) -->
+</script>
+
+<script type="text/javascript" src="lib/d3.js"></script>
+
+	<style type="text/css" id="day-length-css">
+		div#day-length text {
+  		fill: gray;
+  		font-family: Helvetica, sans-serif;
+  		font-size: 10px;
+		}
+		
+	</style>
+	
+	<style type="text/css">
+.popup {
+	zoom:1.0;
+	position:relative;
+	text-decoration:none;
+}
+.popup span {
+	position:fixed;
+	top:170px;
+	left:500px;
+	width:350px;
+	padding:10px;
+	border:10px solid #000;
+	border-radius:10px;
+	left:-999em;
+	z-index:990;
+        
+}
+.popup:hover {visibility:visible}
+.popup:hover span {left:350px;}
+* html .popup span {position:absolute;}
+</style>
+</head>
+<body>
+	<div id="header">
+		<div id="colHeader">
+		<a href="index.html"><img src="images/logo.png" alt="logo" style="float: left;padding-left: 50px"></a>
+		<h2>Information Visualization of Seattle Crime data</h2>
+		</div>
+		
+	</div>
+<div id="content">
+	<div id="colMenu">
+		<div id="menu1">
+			<ul>
+				<li id="menu-01"><a href="#" class="current">About</a></li> <li><p>|</p></li>
+				<li id="menu-03"><a href="time_pattern_analyzer.html">Yearly Crime Pattern Analyzer</a></li><li><p>|</p></li>
+				<li id="menu-04"><a href="week_analyzer.html">Weekly Crime Pattern Analyzer</a></li><li><p>|</p></li>
+				<li id="menu-02"><a href="seattle_walkability.html">Seattle Walkability</a></li><li><p>|</p></li>
+				<li id="menu-05"><a href="reference.html">Reference</a></li>
+			</ul>	
+		</div>
+	</div>
+	<div id="contentcenter">
+		<br><br>
+	</div>
+	<div id="colLeft">
+		<a href="http://faculty.washington.edu/aragon/classes/hcde411/w13/" target="_blank"><h3>About HCDE 411</h3></a><br><br>
+		<h3>Team Members</h3>
+		<p><strong>Hu, Danni</strong><br><u><a href="mailto:danniphu@uw.edu">danniphu@uw.edu</a></u><br><img src="images/danni.jpg" width="50%"></p>
+		<p><strong>Lee, Po-shen</strong><br><u><a href="mailto:sephon@uw.edu">sephon@uw.edu</a></u><br><img src="images/poshen.jpg" width="50%"></p>
+		<p><strong>Raman, Chitra</strong><br><u><a href="mailto:cruwid@uw.edu">cruwid@uw.edu</a></u><br><img src="images/chitra.jpg" width="50%"></p>
+		<p><strong>Rajpurohit, Shakti</strong><br><u><a href="mailto:shaktirp@uw.edu">shaktirp@uw.edu</a></u><br><img src="images/shakti.jpg" width="50%"></p>
+		<br>
+	</div>
+	
+	<div id="colRight">
+		<h3>Project Introduction</h3>
+		<p>The purpose of this information visualization project is to analyze the various crime, accident and offence incident data provided by
+		the government of Seattle to do predictive analysis or preventive analysis on these incidents. Our target users are Seattle residents,
+		Law enforcements groups and other related parties. Our goal through this visualization project would be to help determine if there is a pattern
+		in the occurence of these incidents in terms of place, time, sunrise, sunset time, day and night length etc. We also want to provide pragmatic
+		 and intuitive suggestions to the users through our visualization.<br><br>
+		Scope of this project will not include:<br>
+		<ol>
+			<li>Determine the cause of the incident.</li>
+			<li>Predict where the next incident might occur.</li>
+			<li>Provide information of people/establishments involved in the incident.</li>
+			<li>Average response time of the police department to the incident report categorized by area</li>
+		</ol>
+		</p>
+		<div id="colFour">
+			<a href="week_analyzer.html"><h4 style="text-align: center">Week Analyzer</h4></a>
+			<p>How is the crime rate evolve in you area during specific period of time? Are they any weekly pattern of the crime on friday night?</p>
+			<a href="week_analyzer.html" class="highlightit"><img src="images/week.png" width="100%"></a>
+		</div>
+		<div id="colFour">
+			<a href="time_pattern_analyzer.html"><h4 style="text-align: center">Time Pattern Analyzer</h4></a>
+			<p>Want to know how crime in your area is related to the length of day and night/sunset and sunrise?</p>
+			<a href="time_pattern_analyzer.html" class="highlightit"><img src="images/year.png" width="100%"></a>
+		</div>
+		<div id="colFour">
+			<a href="seattle_walkability.html"><h4 style="text-align: center">Seattle Walkability Map</h4></a>
+			<p>Afraid of walking alone? Want to find the safest route?</p>
+			<a href="seattle_walkability.html" class="highlightit"><img src="images/seattle_walkability.jpg" style="margin: auto;display: block"></a>
+		</div>
+	</div>
+	<hr width="90%"><br><br>
+	<div style="clear:both;">&nbsp;</div>
+</div>
+<div id="footer">
+	<div><p>&copy; University of Washington</p></div>
+</div>
+</body>
+</html>

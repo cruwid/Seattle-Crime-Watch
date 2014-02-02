@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <setParameter name="IIS Web Application Name" value="Default Web Site/Hello911InfoViz_deploy" />
+  <setParameter name="Hello911Entities-Web.config Connection String" value="metadata=res://*/Models.Model1.csdl|res://*/Models.Model1.ssdl|res://*/Models.Model1.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(LocalDB)\v11.0;attachdbfilename=|DataDirectory|\Hello911.mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+  <setParameter name="Hello911EntitiesAggr-Web.config Connection String" value="metadata=res://*/Models.Model2.csdl|res://*/Models.Model2.ssdl|res://*/Models.Model2.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(LocalDB)\v11.0;attachdbfilename=|DataDirectory|\Hello911.mdf;integrated security=True;multipleactiveresultsets=True;application name=EntityFramework&quot;" />
+</parameters>

@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<link href="default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+<script type="text/javascript" src="fadeslideshow.js">
+
+/***********************************************
+* Ultimate Fade In Slideshow v2.0- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for this script and 100s more
+***********************************************/
+
+</script>
+
+<script type="text/javascript">
+<!-- var mygallery=new fadeSlideShow({
+	wrapperid: "fadeshow1", //ID of blank DIV on page to house Slideshow
+	dimensions: [550, 225], //width/height of gallery in pixels. Should reflect dimensions of largest image
+	imagearray: [
+		["images/img4.jpg", "", "", ""],
+		["images/steve.jpg", "", "", ""],
+		["images/img5.jpg", "", "", ""],
+		["images/sporano.jpg", "", "", ""],
+		//<--no trailing comma after very last image element!
+	],
+	displaymode: {type:'auto', pause:2500, cycles:0, wraparound:false},
+	persist: false, //remember last viewed slide and recall within same session?
+	fadeduration: 500, //transition duration (milliseconds)
+	descreveal: "ondemand",
+	togglerid: ""
+}) -->
+</script>
+
+<script type="text/javascript" src="lib/d3.js"></script>
+
+	<style type="text/css" id="day-length-css">
+		div#day-length text {
+  		fill: gray;
+  		font-family: Helvetica, sans-serif;
+  		font-size: 10px;
+		}
+		
+	</style>
+    
+    
+
+</head>
+<body>
+	<div id="header">
+		<div id="colHeader">
+		<a href="index.html"><img src="images/logo.png" alt="logo" style="float: left;padding-left: 50px"></a>
+		<h2>Information Visualization of Seattle Crime data</h2>
+		</div>
+		
+	</div>
+<div id="content">
+	<div id="colMenu">
+		<div id="menu1">
+			<ul>
+				<li id="menu-01"><a href="index.html">About</a></li> <li><p>|</p></li>
+				<li id="menu-03"><a href="time_pattern_analyzer.html">Yearly Crime Pattern Analyzer</a></li><li><p>|</p></li>
+				<li id="menu-04"><a href="week_analyzer.html">Weekly Crime Pattern Analyzer</a></li><li><p>|</p></li>
+				<li id="menu-02"><a href="seattle_walkability.html">Seattle Walkability</a></li><li><p>|</p></li>
+				<li id="menu-05"><a href="reference.html" class="current">Reference</a></li>
+			</ul>	
+		</div>
+	</div>
+	<div style="padding: 0 10% 0 10%">
+		<br><br>
+		<strong>Research</strong>
+		<p style="text-justify: inter-cluster">For our research, we referred 4 websites to gather various aspects of the visualizations. Firstly we referred Lee Byron's Heat
+		maps where he calculates the walk scores for various places to decide how easy it is to live without a car [1]. We can use the
+		heat map for the intensity of the crimes in the city of Seattle. Next, to get more information on our idea about analyzing crime
+		according to the time of the day, we referred the article by Trulia Trends [2], where they measured the crime rates and used graph
+		to show a graphic of the same. They also had a graphic to show the crime rates in Seattle where using maps with hues, they showed the
+		crime rates in different areas of Seattle [3]. The Trulia trends team could get some really insightful results about type and time of crime.
+		Lastly, to visualize data over space and time we referred the graphic by Kevin Bell which analyses the crime in Salt Lake city [4].</p>
+		
+		<strong>Reference</strong>
+		<ol>
+			<li><a href="http://flowingdata.com/2008/07/24/mapping-walkability-in-san-francisco/">http://flowingdata.com/2008/07/24/mapping-walkability-in-san-francisco/</a></li>
+			<br><li><a href="http://trends.truliablog.com/2011/07/do-bad-guys-sleep/">http://trends.truliablog.com/2011/07/do-bad-guys-sleep/</li></a>
+			<br><li><a href="http://www.trulia.com/real_estate/Seattle-Washington/crime/">http://www.trulia.com/real_estate/Seattle-Washington/crime/</li></a>
+			<br><li><a href="http://www.directionsmag.com/articles/visualizing-crime-a-data-rose-blooms/204984">http://www.directionsmag.com/articles/visualizing-crime-a-data-rose-blooms/204984</li></a>
+		</ol>
+	</div>
+	
+	<br><hr width="70%"><br><br>
+	<div style="clear:both;">&nbsp;</div>
+</div>
+<div id="footer">
+	<div><p>&copy; University of Washington</p></div>
+</div>
+</body>
+</html>

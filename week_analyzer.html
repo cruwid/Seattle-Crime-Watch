@@ -1,0 +1,612 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<link href="default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<title>WeeklyCrime HeatMap</title>
+    <script type="text/javascript" src="lib/d3.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="lib/jQRangeSlider/css/iThing.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    
+      <script type="text/javascript" src="lib/jQRangeSlider/jQAllRangeSliders-min.js"></script>
+    <script type="text/javascript">
+$(document).ready(function () {
+		//Initializing the Date Range Slider
+             $("#dateSlider").dateRangeSlider(
+            		 {
+            			  bounds:{
+            			    min: new Date(2012, 0, 1),
+            			    max: new Date(2013, 1, 22)
+            			  },
+            		 	defaultValues:{
+            			    min: new Date(2012, 0, 1),
+            			    max: new Date(2013, 1, 18)
+            		 	},
+            		 	step:
+            		 	{
+            		 	days:6
+            		 	}
+            		 	}
+            		 );
+             var dateValues = $("#dateSlider").dateRangeSlider("values");
+             var minDate = $.datepicker.formatDate('yy-mm-dd',dateValues.min);
+             var maxDate = $.datepicker.formatDate('yy-mm-dd',dateValues.max);
+             var suburb;
+             var crimeType = $("#incident").val();
+             // This function called when the dates in the date range slider are changed.
+             $("#dateSlider").on("valuesChanged", function(e, data){
+            	
+           
+           minDate = $.datepicker.formatDate('yy-mm-dd',data.values.min);
+           maxDate = $.datepicker.formatDate('yy-mm-dd',data.values.max);
+           console.log("Something moved. min: " + minDate + " max: " + maxDate);
+           suburb= $("#suburbName").val();
+           crimeType=$("#incident").val();
+           getWeekCrimeData(minDate, maxDate,suburb,crimeType);
+            	});
+            
+        	 //This is called when the value in the suburb dropdown is changed.
+        	 $("#suburbName").change(function()
+        		{
+        		 dateValues = $("#dateSlider").dateRangeSlider("values");
+        		 minDate = $.datepicker.formatDate('yy-mm-dd',dateValues.min);
+                 maxDate = $.datepicker.formatDate('yy-mm-dd',dateValues.max);
+                 suburb = $("#suburbName").val();
+                 crimeType=$("#incident").val();
+        		 getWeekCrimeData(minDate,maxDate,suburb,crimeType);
+        		});
+        	 $("#incident").change(function()
+             		{
+             		  dateValues = $("#dateSlider").dateRangeSlider("values");
+             		  minDate = $.datepicker.formatDate('yy-mm-dd',dateValues.min);
+                      maxDate = $.datepicker.formatDate('yy-mm-dd',dateValues.max);
+                      suburb = $("#suburbName").val();
+                      crimeType=$("#incident").val();
+             		  getWeekCrimeData(minDate,maxDate,suburb,crimeType);
+             });
+            // Called on page load. Send an AJAX request
+        	 getWeekCrimeData(minDate,maxDate,"",crimeType);
+   }); 
+function getWeekCrimeData(minDate,maxDate,suburb,crimeType)
+{
+  var crimes = [];
+  minDate = typeof minDate !== 'undefined' ? minDate : "2013-02-01";
+  maxDate = typeof maxDate !== 'undefined' ? maxDate : "2013-02-28";
+  suburb = suburb !== 'ALL'? suburb : '';
+  $.getJSON("http://ec2-54-211-171-126.compute-1.amazonaws.com/Hello911/api/Hello911?beginDate="+minDate+"&endDate="+maxDate+"&Suburb="+suburb+"&crimeType="+crimeType,
+  function (data) {
+      // On success, 'data' contains a list of crimes.
+     
+      $.each(data, function (key, val) {
+
+          // Format the text to display.
+          var str = {crime:val.CrimeCount,day:val.EventDay,time:val.EventTimeHour};
+          	crimes.push(str);
+      	});
+      weekData(crimes);
+		 });
+  }
+         //<!--
+ 	
+    //-->
+    </script>
+    
+    <style type="text/css">	
+		div.bar {
+			display: inline-block;
+			width: 20px;
+			height: 75px;
+			margin-right: 2px;
+			background-color: teal;		
+		}	
+		li
+		{
+		display:inline;
+		padding-right:20px;
+		}
+	</style>
+	<style type="text/css">
+		.popup {
+		zoom:1.0;
+		position:relative;
+		text-decoration:none;
+		}
+	.popup span {
+		position: absolute;
+		top:7px;
+		color: #000000;
+		left:2px;
+		width:350px;
+		padding:4px;
+		border:1px solid #333333;
+		border-radius:4px;
+		left:-999em;
+		background-color: #e2e2e2;
+		opacity: 0.9;
+		z-index:990;
+		}
+	.popup:hover {visibility:visible}
+	.popup:hover span {left:70px;}
+	* html .popup span {position:absolute;}
+	</style>
+    
+
+</head>
+<body>
+	<div id="header">
+		<div id="colHeader">
+		<a href="index.html"><img src="images/logo.png" alt="logo" style="float: left;padding-left: 50px"></a>
+		<h2>Information Visualization of Seattle Crime data</h2>
+		</div>
+		
+	</div>
+<div id="content">
+	<div id="colMenu">
+		<div id="menu1">
+			<ul>
+				<li id="menu-01"><a href="index.html">About</a></li> <li><p>|</p></li>
+				<li id="menu-03"><a href="time_pattern_analyzer.html">Yearly Crime Pattern Analyzer</a></li><li><p>|</p></li>
+				<li id="menu-04"><a href="week_analyzer.html" class="current">Weekly Crime Pattern Analyzer</a></li><li><p>|</p></li>
+				<li id="menu-02"><a href="seattle_walkability.html">Seattle Walkability</a></li><li><p>|</p></li>
+				<li id="menu-05"><a href="reference.html">Reference</a></li>
+			</ul>	
+		</div>
+	</div>
+	<div id="contentcenter">
+		<br><br>
+	</div>
+	<div id="filter">
+	<div style="float:left; width:400px;height:50px">
+	<h2>Weekly Crime Pattern Analyzer</h2><p><a class="popup" href="#"><img src="images/help.png" style="padding-left: 10px">
+	<span>This visualization shows the weekly aggregated crimes in Seattle over a period of time. The x-axis is the 'Time' and y-axis is the 'Day of the week'.
+	<br>The visualization has 3 filters, first two; type of incident and Suburb are on top of the visualization.
+	<br>The filter on the bottom is the time filter. The size can be changed and bar can be moved according to your requirements.</span></a></p>
+	</div>
+	<ul style="float:left" >
+		<li>Type of Incident:
+			<select id="incident" >
+				<option>ALL</option>
+				<option>ASSAULTS</option>
+				<option>AUTO THEFTS</option>
+				<option>COMMERCIAL BURGLARIES</option>
+				<option>GUN CALLS</option>
+				<option>HOMICIDE</option>
+				<option>LIQUOR VIOLATIONS</option>
+				<option>NARCOTICS COMPLAINTS</option>
+				<option>RESIDENTIAL BURGLARIES</option>
+				<option>ROBBERY</option>
+				<option>THEFT</option>
+				<option>WEAPONS CALLS</option>
+			</select>
+		</li>
+		<li>Suburb:
+			<select id="suburbName" >
+				<option>ALL</option>
+				<option>Ballard</option>
+				<option>Beacon Hill</option>
+				<option>Belltown</option>
+				<option>Broadview</option>
+				<option>Capitol Hill</option>
+				<option>Central District</option>
+				<option>Delridge</option>
+				<option>Edmonds</option>
+				<option>First Hill</option>
+				<option>Georgetown</option>
+				<option>Green Lake</option>
+				<option>Greenwood</option>
+				<option>Haller Lake</option>
+				<option>International District</option>
+				<option>Lake City</option>
+				<option>Leschi</option>
+				<option>Madison Park</option>
+				<option>Madison Valley</option>
+				<option>Madrona</option>
+				<option>Magnolia</option>
+				<option>Maple Leaf</option>
+				<option>Mount Baker</option>
+				<option>North Park</option>
+				<option>Northgate</option>
+				<option>Phinney Ridge</option>
+				<option>Queen Anne</option>
+				<option>Rainier Valley</option>
+				<option>Shoreline</option>
+				<option>University District</option>
+				<option>Wallingford</option>
+				<option>West Seattle</option>
+				<option>White Center</option>
+				<option>Yesler Terrace</option>
+			</select>
+		</li>
+	</ul>
+	<hr style="clear:both">
+	</div>
+    <div id="weeklyCrime"></div>
+	<div id="slidercontainer" style = "width:50% !important ;height:20px !important;padding-left:80px">
+    	<div id="dateSlider"></div>	
+    </div>
+</div>
+    <script type="text/javascript">
+    function weekData(crimes)
+    {
+		var w = 1100;
+		var h = 420;
+		var padding = 50;
+		var barPadding = 1;
+		//var rectSize = 50;
+		var rectWidth = 35;
+		var rectHeight = rectWidth * 1.4;
+		var frontPadding = 100;
+		
+		//Data
+		var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+			
+		var colorScale = d3.scale.linear()
+        				.domain([0, d3.max(crimes, function(d) { return d.crime; })])
+                     	.range([0, 255]);
+                     
+
+		var maxCrime = d3.max(crimes, function(d) { return d.crime; });
+			
+		var scale = d3.scale.linear()
+                    .domain([100, 500])
+                    .range([10, 350]);
+			
+		//Create SVG element
+		d3.select("#weekCrimeViz").remove();
+		var weeklyCrime = d3.select("#weeklyCrime")
+					.append("svg:svg")
+					.attr("width", w + padding * 2)
+					.attr("height", h + padding * 2)
+					.attr("id","weekCrimeViz");
+
+	
+		// create a group to hold the axis-related elements
+		var axisGroup = weeklyCrime.append("svg:g").
+  		attr("transform", "translate("+padding+","+padding+")");
+
+		// Print y axis
+		var yAxisTicks = axisGroup.selectAll("rect.yaxis").
+						 data(weekdays).
+						 enter().
+						 append("rect").
+						 attr("x", 0).
+						 attr("y", function(d, i) { return i * rectHeight + rectHeight / 4; }).
+						 attr("width", 24 * rectWidth + 2 * frontPadding).
+			   			 attr("height", rectHeight / 2).
+			   			 attr("fill", "white").
+			   		 	 attr("stroke", "darkgrey").
+			   			 attr("stroke-width", "0.5px");
+		
+		// Print Weekday on Left
+		var printWeekdayLeft = axisGroup.selectAll("text.weekdays").
+			   			   	   data(weekdays).
+			   			       enter().
+			   			   	   append("text").
+			   			   	   text(function(d) { return d; }).
+			   			   	   attr("text-anchor", "end").
+			   			   	   attr("x", frontPadding/1.1).
+			   			   	   attr("y", function(d, i) { return i * rectHeight + rectHeight/2; }).
+			   			   	   attr("dy", "5").
+			   			   	   attr("font-family", "sans-serif").
+			   			   	   attr("font-size", "14px").
+			   			   	   attr("fill", "rgb(95,95,95)");
+
+		// Print Weekday on Right
+		var printWeekdayRight = axisGroup.selectAll("text.weekdays").
+			   			   data(weekdays).
+			   			   enter().
+			   			   append("text").
+			   			   text(function(d) { return d; }).
+			   			   attr("text-anchor", "start").
+			   			   attr("x", 24 * rectWidth + 1.1 * frontPadding).
+			   			   attr("y", function(d, i) { return i * rectHeight + rectHeight/2; }).
+			   			   attr("dy", "5").
+			   			   attr("font-family", "sans-serif").
+			   			   attr("font-size", "14px").
+			   			   attr("fill", "rgb(95,95,95)");
+		
+		
+		// Print x axis
+		var xAxisTicks = axisGroup.selectAll(".xTicks").
+ 						 data(d3.range(0, 25)).
+ 						 enter().append("svg:line").
+  						 attr("x1", function(d) { return d * rectWidth + frontPadding; }).
+  						 attr("y1", getXAxisTicksFront).
+  						 attr("x2", function(d) { return d * rectWidth + frontPadding; }).
+  						 attr("y2", getXAxisTicksEnd).
+  						 attr("stroke", "rgb(95,95,95)").
+  						 attr("stroke-width", "0.5px").
+  						 attr("class", "xTicks");
+
+		function getXAxisTicksEnd(d) {
+			if (d % 2 == 0) {
+				return 7 * rectHeight + 10;
+			} else {
+				return 7 * rectHeight + 25;
+			}
+		}
+		
+		function getXAxisTicksFront(d) {
+			if (d % 2 == 0) {
+				return -10;
+			} else {
+				return -25;
+			}
+		} 
+
+		// Print Time in x axis
+		// Print Time on Top
+		var printTimeTop = axisGroup.selectAll("text.xAxisBottom").
+						   data(d3.range(0,25)).
+			   			   enter().
+			   			   append("text").
+			   			   text(getTime).
+			   			   attr("text-anchor", "middle").
+			   			   attr("x", function(d) { return frontPadding + d * rectWidth; }).
+			   			   attr("y", getTimeYTop).
+			   			   attr("font-family", "sans-serif").
+			   			   attr("font-size", "12px").
+			   			   attr("fill", "rgb(95,95,95)");
+		
+		// Print Time on Bottom 			
+		var printTimeBottom = axisGroup.selectAll("text.xAxisBottom").
+							  data(d3.range(0,25)).
+			   				  enter().
+			   				  append("text").
+			   				  text(getTime).
+			   				  attr("text-anchor", "middle").
+			   				  attr("x", function(d) { return frontPadding + d * rectWidth; }).
+			   				  attr("y", getTimeYBottom).
+			   				  attr("font-family", "sans-serif").
+			   				  attr("font-size", "12px").
+			   				  attr("fill", "rgb(95,95,95)");
+			   			
+			   			
+		function getTime(d) {
+			if (d < 12) {
+				return d + " am";	
+			}else if (d == 24) {
+				return 0 + " am";
+			}else if (d == 12) {
+				return 12 + " pm";
+			}else 
+				return (d % 12) + " pm";
+		}
+		
+		function getTimeYBottom(d) {
+			if (d % 2 == 0) {
+				return 7.3 * rectHeight;	
+			} else {
+			   	return 7.6 * rectHeight;
+			}
+		}
+		
+		function getTimeYTop(d) {
+			if (d % 2 == 0) {
+				return - 0.3 * rectHeight;	
+			} else {
+			   	return - 0.6 * rectHeight;
+			}
+		}
+			
+
+		// background heat boxes for null data
+		var backgroundRect = axisGroup.selectAll("rect.background").
+							 data(d3.range(0,168)).
+							 enter().
+							 append("rect").
+							 attr("x", function(d) {return (d % 24) * rectWidth + frontPadding + 0.5 *  barPadding; }).
+							 attr("y", function(d) {return (d % 7) * rectHeight; }).
+							 attr("width", rectWidth - barPadding).
+			   	   			 attr("height", rectHeight - barPadding).
+			       			 attr("fill", "white");
+			       			 
+		// background heat values for null data
+		var printNA = axisGroup.selectAll("text.NA").
+			   			  data(d3.range(0,168)).
+			   			  enter().
+			   	      	  append("text").
+			   			  text("0").
+			   			  attr("text-anchor", "middle").
+			   	     	  attr("x", function(d) {return (d % 24) * rectWidth + rectWidth/2 + frontPadding;}).
+			   			  attr("y", function(d) {return (d % 7) * rectHeight + rectHeight/3; }).
+			   	    	  attr("font-family", "sans-serif").
+			   			  attr("font-size", "11px").
+			   			  attr("fill", "black");	
+			
+
+		// create a group to hold the heatMap elements
+		var heatMapGroup = weeklyCrime.append("svg:g").
+  		attr("transform", "translate("+padding+","+padding+")");
+		
+		
+		var colorBlock = d3.scale.linear().domain([0, 255]).range(["white", "red"]);
+		// var color = d3.scale.category20b();
+		
+		// print blocks
+		var rect = heatMapGroup.selectAll("rect.block").
+				   data(crimes).
+				   enter().
+				   append("rect").
+				   attr("x", function(d) {return d.time * rectWidth + frontPadding + 0.5 *  barPadding;}).
+				   attr("y", getRectY).
+				   attr("width", rectWidth - barPadding).
+			   	   attr("height", rectHeight - barPadding).
+			       attr("fill", colorGradient).
+			       style("cursor", "pointer").
+			       on("click", clickBlock);
+			
+			
+		function clickBlock(d, i) {
+			var clickRect = heatMapGroup.
+				   append("rect").
+				   // attr("id", "clicksblock" + i; }).
+				   attr("x", (d.time * rectWidth + frontPadding + 0.5 *  barPadding - rectWidth/2)).
+				   attr("y", -rectHeight/2 + getRectY(d)).
+				   attr("width", (rectWidth - 1 * barPadding)*2).
+			   	   attr("height", (rectHeight - 1 * barPadding)*2).
+			       attr("fill", "white").
+			       attr("fill-opacity", "0").
+			       attr("stroke", "#4a0c80").
+			       attr("stroke-width", "3px").
+			       attr("stroke-opacity", "0.7").
+			       on("click", closeClickBlock).
+			       transition().          
+        		   delay(0).            
+        		   duration(300).
+        		   attr("x", (d.time * rectWidth + frontPadding + 0.5 *  barPadding)).
+				   attr("y", getRectY(d)).
+        		   attr("width", rectWidth - 1 * barPadding).
+			   	   attr("height", rectHeight - 1 * barPadding);
+		}
+		
+		
+		function closeClickBlock() {
+			d3.select(this).remove();
+		} 	
+			
+			
+		function colorGradient(d) {
+			// return "rgb(" + (Math.floor(colorScale(d.crime)) * 2) + " , 0, " + Math.floor(colorScale(d.crime)) + ")";
+			// return "rgb(" + (Math.floor(colorScale(d.crime))) + ", " + 0 + ", " + 0 + ")";
+			return colorBlock(Math.floor(colorScale(d.crime)));
+		}
+
+			
+		// print block number
+		var PrintValues = heatMapGroup.selectAll("text.value").
+			   			  data(crimes).
+			   			  enter().
+			   	      	  append("text").
+			   			  text(function(d) { return d.crime; }).
+			   			  attr("text-anchor", "middle").
+			   	     	  attr("x", function(d) {return d.time * rectWidth + rectWidth/2 + frontPadding;}).
+			   			  attr("y", getValueY).
+			   	    	  attr("font-family", "sans-serif").
+			   			  attr("font-size", "11px").
+			   			  attr("fill", "black");
+			
+
+		function getValueY(d) {
+			return getRectY(d) + rectHeight/3;
+		}
+	
+	
+		function getRectY(d) {
+			switch(d.day) {
+				case "Sunday":
+					return 0;
+					break;
+				case "Monday":
+					return 1 * rectHeight;
+					break;
+				case "Tuesday":
+					return 2 * rectHeight;
+					break;
+				case "Wednesday":
+					return 3 * rectHeight;
+					break;
+				case "Thursday":
+					return 4 * rectHeight;
+					break;
+				case "Friday":
+					return 5 * rectHeight;
+					break;
+				case "Saturday":
+					return 6 * rectHeight;
+					break;
+				}
+		}
+		
+		
+		var legendGroup = weeklyCrime.append("svg:g").
+  		attr("transform", "translate("+padding+","+padding+")");
+		
+		var gradient = weeklyCrime.append("svg:defs")
+  		.append("svg:linearGradient")
+    	.attr("id", "gradient")
+    	.attr("x1", "0%")
+    	.attr("y1", "0%")
+    	.attr("x2", "100%")
+    	.attr("y2", "0%")
+    	.selectAll("stop")
+    	.data([                             
+            {offset: "0%", color: "white"},       
+            {offset: "100%", color: "red"},    
+        ])
+    	.enter()
+    	.append("stop")
+   		.attr("offset", function(d) { return d.offset; })
+    	.attr("stop-color", function(d) { return d.color; });    	
+	
+		var legendBox = legendGroup.append("svg:rect").
+    	 				  attr("x", rectWidth * 22).
+				  		  attr("y", rectHeight * 8).
+				   		  attr("width", rectWidth * 6).
+			   	   		  attr("height", rectHeight * 1.5).
+    					  attr("fill", "white").
+    					  attr("fill-opacity", "0.5").
+    					  attr("stroke", "rgb(95,95,95)").
+			   			  attr("stroke-width", "0.2px");
+	
+		var legend = legendGroup.append("svg:rect").
+    	 						 attr("x", rectWidth * 23).
+				  				 attr("y", rectHeight * 8.6).
+				   				 attr("width", rectWidth * 4).
+			   	   				 attr("height", rectHeight / 2).
+    							 style("fill", "url(#gradient)").
+    							 attr("stroke", "rgb(95,95,95)").
+			   			 		 attr("stroke-width", "0.5px");
+			   	
+		//
+		var legendDeco = legendGroup.selectAll("rect.deco").
+								 	 data(d3.range(0, 4)).enter().
+								 	 append("rect").
+    	 						 	 attr("x", function(d) { return (23 + d) * rectWidth}).
+				  				 	 attr("y", rectHeight * 8.6).
+				   				 	 attr("width", rectWidth).
+			   	   				 	 attr("height", rectHeight / 2).
+    							 	 style("fill", "white").
+    							 	 attr("fill-opacity", "0").
+    							 	 attr("stroke", "white").
+			   			 		 	 attr("stroke-width", "0.2px");	   	
+
+
+		var legendLabel = legendGroup.selectAll("text.value").
+						  data([0, maxCrime]).
+						  enter().
+						  append("text").
+						  text(function(d){return d;}).
+						  attr("x", function(d, i) { return  (22.5 + i * 5 ) * rectWidth; }).
+						  attr("y", rectHeight * 9).
+						  attr("dy", -2).
+						  attr("text-anchor", "middle").
+						  attr("font-family", "sans-serif").
+			   			  attr("font-size", "15px").
+			   			  attr("fill", "rgb(95,95,95)");
+
+  		var legendTitle = legendGroup.append("text").
+  						  text("Total Incidents").
+  						  attr("x", 25 * rectWidth).
+						  attr("y", rectHeight * 8.45).
+						  attr("text-anchor", "middle").
+						  attr("font-family", "sans-serif").
+			   			  attr("font-size", "15px").
+			   			  attr("fill", "rgb(95,95,95)");
+  						
+  	
+    }
+    </script>
+	
+	<div style="clear:both;">&nbsp;</div>
+</div>
+<div id="footer">
+	<div><p>&copy; University of Washington</p></div>
+</div>
+</body>
+</html>

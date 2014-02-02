@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Hello911DBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="Hello911DBModelStoreContainer">
+          <EntitySet Name="crimeEventLog" EntityType="Hello911DBModel.Store.crimeEventLog" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+        </EntityContainer>
+        <EntityType Name="crimeEventLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="EventNumber" Type="bigint" Nullable="false" />
+          <Property Name="GeneralOffenseNumber" Type="bigint" Nullable="false" />
+          <Property Name="EventClearanceCode" Type="int" Nullable="false" />
+          <Property Name="EventClearanceSubGroup" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="EventClearanceGroup" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="EventClearanceDate" Type="date" />
+          <Property Name="EventTime" Type="time" />
+          <Property Name="Longitude" Type="varchar" MaxLength="50" />
+          <Property Name="Suburb" Type="varchar" MaxLength="50" />
+          <Property Name="Street" Type="varchar" MaxLength="100" />
+          <Property Name="Zipcode" Type="varchar" MaxLength="50" />
+          <Property Name="Latitude" Type="varchar" MaxLength="50" />
+          <Property Name="IncidentLocation" Type="varchar" MaxLength="100" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Hello911DBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="Hello911Entities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="crimeEventLogs" EntityType="Hello911DBModel.crimeEventLog" />
+        </EntityContainer>
+        <EntityType Name="crimeEventLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="EventNumber" Type="Int64" Nullable="false" />
+          <Property Name="GeneralOffenseNumber" Type="Int64" Nullable="false" />
+          <Property Name="EventClearanceCode" Type="Int32" Nullable="false" />
+          <Property Name="EventClearanceSubGroup" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="EventClearanceGroup" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="EventClearanceDate" Type="DateTime" Precision="0" />
+          <Property Name="EventTime" Type="Time" Precision="7" />
+          <Property Name="Longitude" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Suburb" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Street" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Zipcode" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Latitude" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="IncidentLocation" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Hello911DBModelStoreContainer" CdmEntityContainer="Hello911Entities">
+          <EntitySetMapping Name="crimeEventLogs">
+            <EntityTypeMapping TypeName="Hello911DBModel.crimeEventLog">
+              <MappingFragment StoreEntitySet="crimeEventLog">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EventNumber" ColumnName="EventNumber" />
+                <ScalarProperty Name="GeneralOffenseNumber" ColumnName="GeneralOffenseNumber" />
+                <ScalarProperty Name="EventClearanceCode" ColumnName="EventClearanceCode" />
+                <ScalarProperty Name="EventClearanceSubGroup" ColumnName="EventClearanceSubGroup" />
+                <ScalarProperty Name="EventClearanceGroup" ColumnName="EventClearanceGroup" />
+                <ScalarProperty Name="EventClearanceDate" ColumnName="EventClearanceDate" />
+                <ScalarProperty Name="EventTime" ColumnName="EventTime" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Suburb" ColumnName="Suburb" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="IncidentLocation" ColumnName="IncidentLocation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams />
+  </Designer>
+</edmx:Edmx>
